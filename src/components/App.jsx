@@ -7,6 +7,8 @@ import { Section } from './Section/Section';
 import { Contacts } from './Contacts/Contacts';
 import { Filter } from './Filter/Filter';
 
+const CONTACTS_KEY = 'phonebook_contacts';
+
 const initialState = {
   contacts: [
     { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -19,6 +21,17 @@ const initialState = {
 
 export class App extends Component {
   state = initialState;
+
+  componentDidMount() {
+    const savedContacts = JSON.parse(localStorage.getItem(CONTACTS_KEY));
+    if (savedContacts) {
+      this.setState({ contacts: savedContacts });
+    }
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem(CONTACTS_KEY, JSON.stringify(this.state.contacts));
+  }
 
   hasContact = ({ name }) =>
     this.state.contacts.some(contact => contact.name === name);
@@ -42,13 +55,13 @@ export class App extends Component {
     );
 
   handleFilter = evt => this.setState({ filter: evt.target.value });
+
   render() {
     return (
       <div
         style={{
           height: '100vh',
           display: 'flex',
-          // flexDirection: 'column',
           gap: '120px',
           justifyContent: 'center',
           alignItems: 'center',
