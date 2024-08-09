@@ -1,0 +1,22 @@
+.contact_list {
+  width: 800px;
+  list-style: none;
+  padding: 0;
+}
+
+.contact {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}
+
+.name {
+  margin-right: auto;
+}
+.button {
+  border-radius: 8px;
+}
